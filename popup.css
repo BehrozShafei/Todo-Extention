@@ -188,7 +188,16 @@
   .settings :where(i, li) {
     cursor: pointer;
   }
-  
+  .settings :where(i) {
+    font-size: 22px;
+  }
+  .settings{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 180px;
+  }
+ 
   .settings .task-menu {
     position: absolute;
     right: -5px;

@@ -30,9 +30,10 @@ function showTodo(filter) {
                                 <p class="${completed}">${todo.name}</p>
                             </label>
                             <div class="settings">
-                                <p class="timer-text"><span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span></p>
-                                <i onclick='editTask(${id}, "${todo.name}")'><i class="uil uil-pen"></i>Edit</i>
-                                <i onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</i>
+                            <i onclick='deleteTask(${id}, "${filter}")' class='fa-solid fa-remove' style='color:red;font-size:25px'></i>
+                            <i onclick='editTask(${id}, "${todo.name}")' class='fa-solid fa-edit' style='color:blue'></i>
+                            <i onclick='startCount(${id}, "${filter}")'class='fa-solid fa-clock'style='color:gray' ></i>
+                            <p class="timer-text"><span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span></p>
                             </div>
                         </li>`;
       
@@ -42,8 +43,6 @@ function showTodo(filter) {
   
   taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
   let test = document.querySelectorAll(".trstttttttt")
-  console.log('test', test)
-
  Array.from(test).map((post) => {
   post.addEventListener("click", someFunction);
 function someFunction(event) {
@@ -74,9 +73,7 @@ function showMenu(selectedTask) {
 }
 
 function updateStatus(selectedTask) {
-  console.log("Please select===>>>>"+selectedTask)
   let taskName = selectedTask.parentElement.lastElementChild;
-  console.log("Please select===>>>>taskname"+taskName)
   if (selectedTask.checked) {
     console.log("Please select===>>>>electedTask.checked"+selectedTask.checked)
 
@@ -84,30 +81,29 @@ function updateStatus(selectedTask) {
     taskName.classList.add("checked");
     todos[selectedTask.id].status = "completed";
   } else {
-    console.log("Please select===>>>>taskname"+none)
     taskName.classList.remove("checked");
     todos[selectedTask.id].status = "pending";
   }
   localStorage.setItem("todo-list", JSON.stringify(todos));
 }
+const startCount=()=>{
+ let hoursSpan= '.hours';
+ let  minutesSpan= '.minutes';
+ let secondsSpan= '.seconds'
+  const seconds = document.querySelector(secondsSpan);
+            const minutes = document.querySelector(minutesSpan);
+            const hours = document.querySelector(hoursSpan); 
 
+            let sec = 0;
+            intervalID = setInterval(function() {
+                sec++;
+                seconds.textContent = (`0${sec % 60}`).substr(-2);
+                minutes.textContent = (`0${(parseInt(sec / 60)) % 60}`).substr(-2);
+                hours.textContent = (`0${parseInt(sec / 3600)}`).substr(-2);
+            }, 1000);
+}
 function editTask(taskId, textName) {
-//   debugger
-//   console.log("Please select===>>>>taskid"+taskId)
-//  let hoursSpan= '.hours';
-//  let  minutesSpan= '.minutes';
-//  let secondsSpan= '.seconds'
-//   const seconds = document.querySelector(secondsSpan);
-//             const minutes = document.querySelector(minutesSpan);
-//             const hours = document.querySelector(hoursSpan); 
 
-//             let sec = 0;
-//             intervalID = setInterval(function() {
-//                 sec++;
-//                 seconds.textContent = (`0${sec % 60}`).substr(-2);
-//                 minutes.textContent = (`0${(parseInt(sec / 60)) % 60}`).substr(-2);
-//                 hours.textContent = (`0${parseInt(sec / 3600)}`).substr(-2);
-//             }, 1000);
   editId = taskId;
   isEditTask = true;
   taskInput.value = textName;
